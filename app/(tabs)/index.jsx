@@ -4,30 +4,38 @@ import { Link } from 'expo-router';
 
 export default function Home() {
   return (
-    
+
     <View style={styles.container}>
-    <Text style={styles.titulo}>Escolha o projeto</Text>
+      <Text style={styles.titulo}>Escolha o projeto</Text>
       <View style={styles.button}>
-        <Link href="./telaregistro">
-        <Button title="Registrar" onPress={() => {}}/>
+        <Link href="./telaregistro" asChild>
+          <Button title="Registrar" />
         </Link>
       </View>
       <View style={styles.button}>
-      <Link href="./banco">
-        <Button title="Banco" />
+        <Link href="./banco" asChild>
+          <Button title="Banco" />
         </Link>
       </View>
       <View style={styles.button}>
+        <Link href="./calculadora" asChild>
         <Button title="Calculadora" />
+        </Link>
       </View>
       <View style={styles.button}>
+        <Link href="./gradient" asChild>
         <Button title="Gradient" />
+        </Link>
       </View>
       <View style={styles.button}>
+        <Link href="./lista" asChild>
         <Button title="Lista" />
+        </Link>
       </View>
       <View style={styles.button}>
+        <Link href="./pokemon" asChild>
         <Button title="Pokemon" />
+        </Link>
       </View>
     </View>
   );
@@ -40,12 +48,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   button: {
-    marginVertical: 10, 
-   
-    
+    marginVertical: 10,
   },
-  titulo:{
+  titulo: {
     textAlign: 'center',
-    
+
   }
 });
