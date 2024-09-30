@@ -37,6 +37,16 @@ export default function Home() {
         <Button title="Pokemon" />
         </Link>
       </View>
+      <View style={styles.button}>
+        <Link href="./ifome" asChild>
+          <Button title="IFOME" />
+        </Link>
+      </View>
+      <View style={styles.button}>
+        <Link href="./sobremim" asChild>
+          <Button title="sobre mim" />
+        </Link>
+      </View>
     </View>
   );
 }
