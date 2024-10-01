@@ -1,41 +1,121 @@
-// import React, {useState, useEffect} from "react";
-// import {View, Text, StyleSheet } from "react-native";
-// import {Picker} from '@react-native-picker/picker';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, ImageBackground } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
 
-// const styles = StyleSheet.create({
-//   container:{
+export default Seletor = () => {
+  const [pokemon, setPokemon] = useState('');
+  const [listaPokemons, setListaPokemons] = useState([]);
+  const [pokemonsIniciais, setPokemonsIniciais] = useState([]);
+  const [tipos, setTipos] = useState([]);
+  const [tipoSelecionado, setTipoSelecionado] = useState('');
 
-//   }
-// });
+  useEffect(() => {
+    fetch('https://pokeapi.co/api/v2/type')
+      .then((response) => response.json())
+      .then((dados) => setTipos(dados.results))
+      .catch((error) => console.error('Erro ao buscar os tipos:', error));
 
-// export default Seletor = () => {
-//     const [pokemon, setPokemon] = useState([]);
-//     const [lista_pokemons, setListaPokemons] = useState([]);
-//     useEffect(() => {
-//       fetch('https://pokeapi.co/api/v2/pokemon?limit=100')
-//       .then((response => response.json()))
-//       .then(dados => setListaPokemons(dados.result))
-//     }, [])
-//     // const lista_pokemons = [
-//     //   { nome: 'Pikachu', value: 'pikachu'},
-//     //   { nome: 'Bubassauro', value: 'bubassauro'},
-//     //   { nome: 'Charmander', value: 'charmander'},
-//     //   { nome: 'Squirtle', value: 'Squirtle'},
-//     // ];
+    fetch('https://pokeapi.co/api/v2/pokemon?limit=151')
+      .then((response) => response.json())
+      .then((dados) => {
+        setListaPokemons(dados.results);
+        setPokemonsIniciais(dados.results);
+      })
+      .catch((error) => console.error('Erro ao buscar os pokémons:', error));
+  }, []);
 
-//     return (
-//         <View style={styles.container}>
-//           <Text style={styles.title}>Selecione um Pokémon</Text>
-//           <Picker
-//             selectedValue={pokemon}
-//             style={styles.picker}
-//             onValueChange={(itemValue) => setPokemon(itemValue)}
-//             >
-//               <Picker.Item label="selecione um Pokemon"/>
-//               {lista_pokemons.map((item, index) => (
-//                 <Picker.Item key={index} label={item.name} url={item.url}/>
-//               ))}
-//           </Picker>
-//         </View>
-//     )
-// }
+  useEffect(() => {
+    if (tipoSelecionado) {
+      fetch(`https://pokeapi.co/api/v2/type/${tipoSelecionado}`)
+        .then((response) => response.json())
+        .then((dados) => {
+          const pokemonsPorTipo = dados.pokemon.map((p) => p.pokemon.name);
+
+          const pokemonsFiltrados = pokemonsIniciais.filter((pokemon) =>
+            pokemonsPorTipo.includes(pokemon.name)
+          );
+
+          setListaPokemons(pokemonsFiltrados);
+        })
+        .catch((error) =>
+          console.error('Erro ao buscar os pokémons por tipo:', error)
+        );
+    } else {
+      setListaPokemons(pokemonsIniciais);
+    }
+  }, [tipoSelecionado, pokemonsIniciais]);
+
+  const image = { uri: "https://img.freepik.com/vetores-gratis/fundo-de-efeito-de-zoom-gradiente_23-2149751078.jpg" };
+
+  return (
+    <ImageBackground source={image} style={styles.backgroundImage}>
+      <View style={styles.container}>
+      <Text style={styles.title}>ESCOLHA O POKEMON</Text>
+        <Picker
+          selectedValue={tipoSelecionado}
+          onValueChange={(itemValue) => setTipoSelecionado(itemValue)}
+          style={styles.picker}
+          itemStyle={styles.pickerItem}
+        >
+          <Picker.Item label='Selecione um Tipo' value='' />
+          {tipos.map((tipo, index) => (
+            <Picker.Item key={index} label={tipo.name} value={tipo.name} />
+          ))}
+        </Picker>
+
+        <Picker
+          selectedValue={pokemon}
+          onValueChange={(itemValue) => setPokemon(itemValue)}
+          style={styles.picker}
+          itemStyle={styles.pickerItem}
+        >
+          <Picker.Item label='Selecione um Pokémon' value='' />
+          {listaPokemons.map((item, index) => (
+            <Picker.Item key={index} label={item.name} value={item.name} />
+          ))}
+        </Picker>
+
+        {pokemon ? <Text style={styles.selectedText}>Você selecionou {pokemon}</Text> : ''}
+      </View>
+    </ImageBackground>
+  );
+};
+
+const styles = StyleSheet.create({
+  backgroundImage: {
+    flex: 1,
+    resizeMode: 'cover',
+  },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+  },
+  title: {
+    fontSize: 35,
+    fontWeight: '600',
+    color: '#ffffff',
+    marginBottom: 25,
+  },
+  picker: {
+    width: '20%',
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    borderColor: '#ddd',
+    borderWidth: 1,
+    elevation: 2,
+    marginBottom: 15,
+  },
+  pickerItem: {
+    height: 50,
+    fontSize: 18,
+    color: '#333',
+  },
+  selectedText: {
+    fontSize: 35,
+    color: '#ffffff',
+    marginTop: 20,
+    fontWeight: 'bold',
+  },
+});
