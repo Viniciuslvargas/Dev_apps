@@ -38,13 +38,13 @@ export default function Home() {
         </Link>
       </View>
       <View style={styles.button}>
-        <Link href="./ifome" asChild>
-          <Button title="IFOME" />
+        <Link href="./sobremim" asChild>
+          <Button title="sobre mim" />
         </Link>
       </View>
       <View style={styles.button}>
-        <Link href="./sobremim" asChild>
-          <Button title="sobre mim" />
+        <Link href="./ifome" asChild>
+          <Button title="IFOME" />
         </Link>
       </View>
     </View>
@@ -56,6 +56,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 120,
     justifyContent: 'center',
+    backgroundColor: 'gray',
   },
   button: {
     marginVertical: 10,
