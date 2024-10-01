@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity, Pressable } from 'react-native';
 import { Link } from 'expo-router';
 
 const App = () => {
@@ -23,6 +23,7 @@ const App = () => {
             </TouchableOpacity>
           </Link>
         </View>
+        
       </View>
     </View>
   );
@@ -89,6 +90,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
   },
+  
 });
 
 export default App;

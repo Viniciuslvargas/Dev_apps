@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, FlatList, TouchableOpacity, StyleSheet, Linking, Image } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, StyleSheet, Linking, Image, Pressable } from 'react-native';
 
 
 import oshowtemquecontinuar from './1.png';
@@ -59,6 +59,9 @@ const App = () => {
         renderItem={renderItem}
         keyExtractor={item => item.id}
       />
+      <Pressable style={styles.backButton} onPress={() => navigation.navigate('/sobremim')}>
+        <Text style={styles.backButtonText}>Voltar</Text>
+      </Pressable>
     </View>
   );
 };
@@ -96,6 +99,24 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: 'green',
   },
-});
+  backButton: {
+    backgroundColor: '#2e8b57',
+    padding: 12, 
+    borderRadius: 25,
+    alignItems: 'center',
+    marginTop: 20,
+    shadowColor: '#000', 
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
+    elevation: 5, 
+  },
+  backButtonText: {
+    color: 'white', 
+    fontSize: 16,
+    fontWeight: 'bold',
+    textTransform: 'uppercase', 
+    fontFamily: 'Arial', 
+}});
 
 export default App;
