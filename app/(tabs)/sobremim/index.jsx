@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity, Pressable } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { Link } from 'expo-router';
 
 const App = () => {
@@ -9,15 +9,15 @@ const App = () => {
         <Image style={styles.profileImage} source={require('./image.png')} />
         <Text style={styles.nameText}>Vinicius Lopes Vargas</Text>
         <Text style={styles.infoText}>Data de Nascimento: 31/12/2006</Text>
-        <Text style={styles.infoText}>Time:  Figueirense kk</Text>
+        <Text style={styles.infoText}>Time: Figueirense kk</Text>
 
         <View style={styles.buttonsContainer}>
-          <Link href="/sobremim/Musicas/" style={styles.buttonLink}>
+          <Link href="./Musicas" style={styles.buttonLink} asChild>
             <TouchableOpacity style={styles.button}>
               <Text style={styles.buttonText}>Músicas Favoritas</Text>
             </TouchableOpacity>
           </Link>
-          <Link href="/sobremim/Filmes/" style={styles.buttonLink}>
+          <Link href="./Filmes" style={styles.buttonLink} asChild>
             <TouchableOpacity style={styles.button}>
               <Text style={styles.buttonText}>Filmes Favoritos</Text>
             </TouchableOpacity>
@@ -74,14 +74,14 @@ const styles = StyleSheet.create({
   buttonLink: {
     width: '100%', 
     alignItems: 'center',
+    marginBottom: 10, // Espaçamento entre os botões
   },
   button: {
     backgroundColor: 'green', 
     paddingVertical: 12,
     paddingHorizontal: 25,
     borderRadius: 30,
-    marginBottom: 10, 
-    width: '100%', 
+    width: '80%', 
     alignItems: 'center',
     justifyContent: 'center', 
   },

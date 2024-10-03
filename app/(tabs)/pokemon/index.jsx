@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     marginBottom: 25,
   },
   picker: {
-    width: '20%',
+    width: '100%',
     backgroundColor: '#fff',
     borderRadius: 10,
     borderColor: '#ddd',

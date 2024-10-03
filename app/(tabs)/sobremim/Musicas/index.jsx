@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet, Linking, Image, Pressable } from 'react-native';
-
+import { Link } from 'expo-router';
 
 import oshowtemquecontinuar from './1.png';
 import RosaNorte from './2.png';
@@ -59,9 +59,11 @@ const App = () => {
         renderItem={renderItem}
         keyExtractor={item => item.id}
       />
-      <Pressable style={styles.backButton} onPress={() => navigation.navigate('/sobremim')}>
-        <Text style={styles.backButtonText}>Voltar</Text>
-      </Pressable>
+      <Link href="/sobremim" asChild>
+            <TouchableOpacity style={styles.backButton}>
+              <Text style={styles.backButtonText}>Voltar</Text>
+            </TouchableOpacity>
+          </Link>
     </View>
   );
 };
@@ -116,7 +118,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     textTransform: 'uppercase', 
-    fontFamily: 'Arial', 
+    
 }});
 
 export default App;
