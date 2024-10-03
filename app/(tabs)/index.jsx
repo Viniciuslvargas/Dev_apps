@@ -47,6 +47,11 @@ export default function Home() {
           <Button title="IFOME" />
         </Link>
       </View>
+      <View style={styles.button}>
+        <Link href="./camera" asChild>
+          <Button title="CAMERA" />
+        </Link>
+      </View>
     </View>
   );
 }
