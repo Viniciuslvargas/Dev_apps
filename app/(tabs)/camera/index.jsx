@@ -1,23 +1,36 @@
 import { useState, useRef } from "react";
-import { View, StyleSheet, Image, Pressable } from "react-native";
+import { View, StyleSheet, Image, Pressable, Text, Button } from "react-native";
 import { CameraView, useCameraPermissions } from "expo-camera";
-
+import * as MediaLibrary from 'expo-media-library'; 
 
 export default function Camera() {
     const [permissao, pedirPermissao] = useCameraPermissions();
+    const [mediaPermissao, pedirMediaPermissao] = MediaLibrary.usePermissions(); 
     const [foto, setFoto] = useState(null);
-    const [cameraType, setCameraType] = useState("back");
+    const [cameraType, setCameraType] = useState("back"); 
     const cameraRef = useRef(null);
 
+    
     if (!permissao) {
         return <View></View>;
     }
 
+    
     if (!permissao.granted) {
         return (
             <View style={styles.container}>
                 <Text style={styles.textpermission}>Você precisa autorizar o aplicativo para utilizar a câmera</Text>
                 <Button title="Dar Permissão" onPress={pedirPermissao} />
+            </View>
+        );
+    }
+
+    
+    if (!mediaPermissao?.granted) {
+        return (
+            <View style={styles.container}>
+                <Text style={styles.textpermission}>Você precisa autorizar o aplicativo para salvar fotos na galeria</Text>
+                <Button title="Dar Permissão para Galeria" onPress={pedirMediaPermissao} />
             </View>
         );
     }
@@ -28,6 +41,15 @@ export default function Camera() {
             base64: true
         });
         setFoto(foto);
+
+        const asset = await MediaLibrary.createAssetAsync(foto.uri);
+        MediaLibrary.createAlbumAsync('Camera', asset, false)
+            .then(() => {
+                console.log('Foto salva com sucesso!');
+            })
+            .catch((error) => {
+                console.log('Erro ao salvar a foto:', error);
+            });
     };
 
     const alternarCamera = () => {
@@ -41,12 +63,15 @@ export default function Camera() {
             ref={cameraRef}
         >
             <View style={styles.buttonContainer}>
+                {}
                 <Pressable onPress={alternarCamera} style={styles.switchButton}>
                     <Image
                         source={require('./alterna.png')}
                         style={styles.switchImage}
                     />
                 </Pressable>
+
+                {}
                 <Pressable onPress={tirarFoto} style={styles.cameraButtonContainer}>
                     <Image
                         source={require('./botaaoo.png')}
@@ -87,8 +112,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     cameraButton: {
-        width: 70,
-        height: 70,
+        width: 90,
+        height: 90,
         marginLeft: -50,
         resizeMode: 'contain',
     },
